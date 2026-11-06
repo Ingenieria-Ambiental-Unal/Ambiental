@@ -13,6 +13,15 @@
  ],
  "convenios": [
   {
+   "id": "kiro",
+   "nombre": "Kiro (AWS)",
+   "tipo": "convenio",
+   "categoria": "Inteligencia Artificial y Desarrollo",
+   "icono": "fantasma",
+   "color": "#6d28d9",
+   "resumen": "1 año gratis de programación con Inteligencia Artificial y 1.000 créditos mensuales con el Plan Estudiantil de Amazon Web Services (AWS) para la UNAL."
+  },
+  {
    "id": "coursera",
    "nombre": "Coursera",
    "tipo": "convenio",

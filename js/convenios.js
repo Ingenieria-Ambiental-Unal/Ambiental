@@ -9,6 +9,7 @@ const estado = { indice: null, filtro: 'todos', abierto: null };
 
 // Íconos propios y genéricos (no son los logos de las empresas)
 const ICONOS = {
+  fantasma: '<path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z"/><circle cx="9" cy="10" r="1.2" fill="currentColor"/><circle cx="15" cy="10" r="1.2" fill="currentColor"/>',
   birrete: '<path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/>',
   funcion: '<path d="M15 4h-2a3 3 0 0 0-3 3v10a3 3 0 0 1-3 3H6"/><path d="M6 11h8M14 14l5 5M19 14l-5 5"/>',
   documento: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
@@ -141,6 +142,25 @@ function pintarDetalle(id) {
               </li>`).join('')}
           </ol>
         </section>
+
+        ${d.video || d.afiche ? `
+          <div class="detalle__multimedia">
+            ${d.video ? `
+              <section class="detalle__video-bloque">
+                <h4>${esc(d.video.titulo || 'Tutorial oficial en video')}</h4>
+                <div class="detalle__video-contenedor">
+                  <iframe src="https://www.youtube-nocookie.com/embed/${esc(d.video.embedId)}" title="${esc(d.video.titulo || 'Tutorial en video')}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+                </div>
+              </section>` : ''}
+            ${d.afiche ? `
+              <aside class="detalle__afiche-bloque">
+                <h4>Afiche informativo</h4>
+                <a class="detalle__afiche-enlace" href="${esc(d.afiche)}" target="_blank" rel="noopener noreferrer" title="Ver afiche completo">
+                  <img class="detalle__afiche-img" src="${esc(d.afiche)}" alt="Afiche Kiro UNAL" loading="lazy">
+                  <span class="detalle__afiche-pie">Click para ver afiche completo</span>
+                </a>
+              </aside>` : ''}
+          </div>` : ''}
 
         <div class="enlaces">
           ${d.enlaces.map((e) => `

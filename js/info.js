@@ -781,7 +781,7 @@ function pintarAsesoria() {
     <a class="info-asesoria__correo" href="mailto:${esc(a.correo)}">${esc(a.correo)}</a>
     <ul class="info-asesoria__datos">
       <li>Representación Estudiantil de Ingeniería Ambiental (Emmanuel Florez Rodriguez): <a href="https://wa.me/573245639125" target="_blank" rel="noopener noreferrer"><strong>💬 WhatsApp (+57) 324 563 9125</strong></a> (<a href="mailto:emflorezr@unal.edu.co">emflorezr@unal.edu.co</a>)</li>
-      <li>Portal web desarrollado por Santiago Escobar Arias · <a href="https://wa.me/573123772091" target="_blank" rel="noopener noreferrer">(+57) 312 377 2091</a></li>
+      <li>Portal web desarrollado por Santiago Escobar Arias (<a href="mailto:saescobara@unal.edu.co">saescobara@unal.edu.co</a> · <a href="https://www.instagram.com/s_escobar__/" target="_blank" rel="noopener noreferrer">@s_escobar__</a>)</li>
       <li>Teléfono Facultad de Minas: ${esc(a.telefono)}</li>
       <li>${esc(a.direccion)}</li>
       <li><a href="${esc(a.solicitudes)}" target="_blank" rel="noopener noreferrer">Solicitudes estudiantiles de la Facultad de Minas</a></li>

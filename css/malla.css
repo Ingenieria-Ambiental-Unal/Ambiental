@@ -765,3 +765,29 @@ body.con-detalle { padding-bottom: 44vh; }
   body.con-detalle { padding-bottom: 56vh; }
   .catalogo { grid-template-columns: 1fr; }
 }
+
+/* ---------- Aviso de Malla Sugerida ---------- */
+.malla__aviso-sugerida {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 14px auto 0;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--papel, #ffffff);
+  border: 1px solid var(--linea, rgba(0, 0, 0, 0.1));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  font-family: var(--letra-texto, sans-serif);
+  font-size: 13px;
+  color: var(--tinta-suave, #555555);
+  line-height: 1.45;
+  text-align: center;
+}
+
+.malla__aviso-sugerida svg {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  color: var(--color-primario, var(--azul, currentColor));
+}

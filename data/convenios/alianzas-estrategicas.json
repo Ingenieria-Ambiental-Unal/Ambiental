@@ -1,0 +1,106 @@
+{
+  "id": "alianzas-estrategicas",
+  "nombre": "Alianzas Estratégicas para el Bienestar",
+  "queEs": "La Sección de Gestión y Fomento Socioeconómico de Bienestar Universitario en la UNAL Sede Medellín articula convenios, contratos y acuerdos de cooperación con entidades públicas y privadas, tanto nacionales como extranjeras. Estas alianzas estratégicas tienen como objetivo garantizar la permanencia, equidad y desarrollo integral de los estudiantes de pregrado y posgrado a través de financiación, becas, subsidios de transporte y apoyos socioeconómicos.",
+  "quienes": [
+    "Estudiantes activos matriculados en pregrado y posgrado de la Universidad Nacional de Colombia - Sede Medellín",
+    "Estudiantes de Construcción que busquen créditos educativos, becas condonables o subsidios de movilidad",
+    "Comunidad universitaria que requiera orientación y acompañamiento en trámites ante entidades aliadas"
+  ],
+  "incluye": [
+    "Orientación y acompañamiento presencial y virtual en trámites de crédito y becas",
+    "Acceso a líneas de financiación reembolsables y créditos condonables",
+    "Tarifa estudiantil preferencial y recargas subsidiadas en la Tarjeta Cívica del Metro de Medellín",
+    "Articulación con programas de la Alcaldía de Medellín, Gobernación de Antioquia y fundaciones privadas",
+    "Gestión de cupos y beneficios socioeconómicos para reducir el riesgo de deserción"
+  ],
+  "requisitos": [
+    "Ser estudiante activo de la Universidad Nacional de Colombia - Sede Medellín",
+    "Tener correo institucional activo (@unal.edu.co)",
+    "Cumplir con los requisitos socioeconómicos y académicos particulares de cada convocatoria aliada",
+    "Contar con Tarjeta Cívica personalizada a tu nombre para los apoyos de transporte"
+  ],
+  "alianzasIntro": "A continuación puedes consultar las principales alianzas y entidades articuladas con Bienestar Universitario en la Sede Medellín. Haz clic en cada botón para leer más información y consultar requisitos:",
+  "alianzas": [
+    {
+      "nombre": "ICETEX · Líneas de Financiación y Crédito Educativo",
+      "tipo": "Crédito Educativo Reembolsable",
+      "descripcion": "Información, orientación y acompañamiento en convocatorias y trámites de crédito con el ICETEX (Línea Tú Eliges, posgrados y sostenimiento) para cubrir costos de matrícula y manutención.",
+      "url": "https://web.icetex.gov.co/",
+      "btnTexto": "Leer más en ICETEX"
+    },
+    {
+      "nombre": "Fondo Sapiencia · Alcaldía de Medellín",
+      "tipo": "Becas y Créditos Condonables",
+      "descripcion": "Articulación con la Agencia de Educación Postsecundaria de Medellín para acceder a fondos de Presupuesto Participativo, Fondo EPM y Becas Medellín con condonación por promedio o servicio social.",
+      "url": "https://sapiencia.gov.co/",
+      "btnTexto": "Leer más en Sapiencia"
+    },
+    {
+      "nombre": "Metro de Medellín · Perfil Estudiante Tarjeta Cívica",
+      "tipo": "Movilidad y Transporte Subsidiado",
+      "descripcion": "Convenio para acceder a la tarifa preferencial del Sistema Integrado de Transporte del Valle de Aburrá (SITVA) y a las convocatorias de viajes subsidiados gestionadas por Bienestar Universitario.",
+      "url": "https://www.metrodemedellin.gov.co/viaje-con-nosotros/tarifas/perfil-estudiante",
+      "btnTexto": "Leer más sobre Cívica"
+    },
+    {
+      "nombre": "Fundaciones y Donaciones Privadas para el Hábitat",
+      "tipo": "Subsidios de Manutención y Permanencia",
+      "descripcion": "Alianzas y acuerdos de cooperación con entidades filantrópicas y fundaciones privadas que otorgan auxilios semestrales de sostenimiento económico y matrícula a estudiantes destacados.",
+      "url": "https://bienestaruniversitario.medellin.unal.edu.co/secciones/gestion-y-fomento",
+      "btnTexto": "Leer más en Bienestar UNAL"
+    }
+  ],
+  "pasos": [
+    {
+      "titulo": "Explora la alianza de tu interés",
+      "texto": "Revisa los requisitos específicos de cada entidad (ICETEX, Sapiencia, Metro de Medellín o Bienestar) y sus fechas de convocatoria semestral."
+    },
+    {
+      "titulo": "Solicita orientación en el Bloque 11A",
+      "texto": "Acude a la oficina de la Sección de Gestión y Fomento Socioeconómico (Edificio de Bienestar, Campus El Volador) o escribe a agestionfse_med@unal.edu.co para recibir asesoría con tu postulación."
+    },
+    {
+      "titulo": "Radica documentos y soportes",
+      "texto": "Diligencia los formularios oficiales de la entidad aliada adjuntando tu certificado de matrícula activa de la UNAL y los soportes socioeconómicos requeridos."
+    },
+    {
+      "titulo": "Legaliza el beneficio",
+      "texto": "Una vez aprobada la postulación, formaliza la entrega o desembolso del apoyo ante la Universidad y la entidad aliada."
+    }
+  ],
+  "enlaces": [
+    {
+      "texto": "Gestión y Fomento Socioeconómico · Bienestar UNAL Medellín",
+      "url": "https://bienestaruniversitario.medellin.unal.edu.co/secciones/gestion-y-fomento",
+      "principal": true
+    },
+    {
+      "texto": "Portal Oficial ICETEX",
+      "url": "https://web.icetex.gov.co/"
+    },
+    {
+      "texto": "Portal Oficial Sapiencia Medellín",
+      "url": "https://sapiencia.gov.co/"
+    },
+    {
+      "texto": "Portal Metro de Medellín · Perfil Estudiante",
+      "url": "https://www.metrodemedellin.gov.co/viaje-con-nosotros/tarifas/perfil-estudiante"
+    }
+  ],
+  "soporte": {
+    "texto": "Atención presencial de lunes a viernes de 8:00 a.m. a 12:00 m. y de 2:00 p.m. a 5:00 p.m. en el Bloque 11A (Edificio de Bienestar Universitario, Campus El Volador). Teléfono: (+57 604) 430 9888 ext. 46605. Correo:",
+    "correo": "agestionfse_med@unal.edu.co"
+  },
+  "consejos": [
+    "Consulta las fechas de apertura de Sapiencia e ICETEX con anticipación al inicio del semestre para tener listos los certificados de matrícula.",
+    "Para el beneficio del Metro, asegúrate de tener tu Tarjeta Cívica personalizada con tu documento de identidad actualizado.",
+    "La Sección de Gestión y Fomento Socioeconómico puede emitir los certificados institucionales que te solicite la entidad aliada."
+  ],
+  "fuentes": [
+    {
+      "titulo": "Sección de Gestión y Fomento Socioeconómico · Bienestar Universitario UNAL Sede Medellín",
+      "url": "https://bienestaruniversitario.medellin.unal.edu.co/secciones/gestion-y-fomento"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "bienestar-auxilios",
+  "nombre": "Auxilios y Apoyos Socioeconómicos (Bienestar Universitario)",
+  "queEs": "El Área de Gestión y Fomento Socioeconómico de Bienestar Universitario en la UNAL Sede Medellín ofrece un conjunto integral de programas de bienestar, subsidios y auxilios económicos diseñados para acompañar la permanencia, equidad y graduación oportuna de los estudiantes de pregrado.",
+  "quienes": [
+    "Estudiantes activos matriculados en pregrado en la Universidad Nacional de Colombia - Sede Medellín",
+    "Estudiantes de Construcción que requieran apoyo alimentario, subsidio de transporte, alojamiento o auxilio económico",
+    "Estudiantes foráneos que provienen de regiones fuera del Área Metropolitana del Valle de Aburrá"
+  ],
+  "incluye": [
+    "Apoyo Alimentario: Servicio de almuerzos diarios en los restaurantes universitarios (Campus El Volador y Robledo)",
+    "Apoyo Económico Estudiantil: Subsidio monetario semestral para gastos de sostenimiento y vida académica",
+    "Auxilio o Bono de Transporte: Apoyo económico para facilitar la movilidad diaria hacia los campus universitarios",
+    "Alojamiento y Residencias Estudiantiles: Cupo o subsidio de vivienda para estudiantes de fuera de Medellín",
+    "Auxilios de emergencia y apoyos extraordinarios de permanencia escolar"
+  ],
+  "requisitos": [
+    "Estar matriculado como estudiante activo de pregrado en el periodo académico vigente",
+    "Puntaje Básico de Matrícula (PBM) evaluado y documentación socioeconómica al día",
+    "Realizar la postulación dentro de las fechas fijadas en el cronograma oficial de convocatorias",
+    "Cumplir con el compromiso de Horas de Corresponsabilidad (mínimo 16 horas semestrales en dependencias de la UNAL)"
+  ],
+  "pasos": [
+    {
+      "titulo": "Consulta el cronograma de convocatorias",
+      "texto": "Ingresa a bienestaruniversitario.medellin.unal.edu.co/secciones/gestion-y-fomento al inicio de cada semestre para conocer las fechas de apertura de cada subsidio."
+    },
+    {
+      "titulo": "Ingresa con tu correo institucional",
+      "texto": "Accede al módulo de convocatorias de bienestar en el SIA o en la plataforma institucional designada con tu usuario @unal.edu.co."
+    },
+    {
+      "titulo": "Diligencia el formulario socioeconómico",
+      "texto": "Selecciona los apoyos a los que deseas postularte (alimentario, económico, transporte o alojamiento) y carga los soportes requeridos (facturas de servicios, certificados de ingresos familiares, etc.)."
+    },
+    {
+      "titulo": "Revisa los resultados de adjudicación",
+      "texto": "La Dirección de Bienestar publica las listas oficiales de beneficiarios tras la valoración socioeconómica y visita de trabajadoras sociales si aplica."
+    },
+    {
+      "titulo": "Legaliza el beneficio y cumple tu corresponsabilidad",
+      "texto": "Acepta el auxilio y coordina las horas de corresponsabilidad en el laboratorio de Construcción (Bloque 25), bibliotecas o eventos de la Sede."
+    }
+  ],
+  "enlaces": [
+    {
+      "texto": "Gestión y Fomento Socioeconómico · Bienestar UNAL Medellín",
+      "url": "https://bienestaruniversitario.medellin.unal.edu.co/secciones/gestion-y-fomento",
+      "principal": true
+    },
+    {
+      "texto": "Portal Principal de Bienestar Universitario Sede Medellín",
+      "url": "https://bienestar.medellin.unal.edu.co/"
+    }
+  ],
+  "soporte": {
+    "texto": "Para asesoría presencial o dudas sobre tu postulación, acude a la Sección de Gestión y Fomento Socioeconómico (Campus El Volador) o escribe a",
+    "correo": "fomentose_med@unal.edu.co"
+  },
+  "consejos": [
+    "¡Atento a la primera semana de clases! Las convocatorias de apoyo alimentario y económico suelen cerrar rápidamente.",
+    "Si eres foráneo de primer ingreso, postúlate con prioridad al auxilio de alojamiento para asegurar tu estadía.",
+    "Las horas de corresponsabilidad son una gran oportunidad para vincularte como apoyo en el Bloque 25 de Construcción o en iniciativas de la Escuela."
+  ],
+  "fuentes": [
+    {
+      "titulo": "Gestión y Fomento Socioeconómico · Bienestar Universitario UNAL Sede Medellín",
+      "url": "https://bienestaruniversitario.medellin.unal.edu.co/secciones/gestion-y-fomento"
+    }
+  ]
+}

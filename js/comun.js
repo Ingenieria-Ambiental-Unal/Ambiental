@@ -172,7 +172,12 @@ function pintarPie() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             </a>
           </div>
-        </div>
+                </div>
+      </div>
+
+      <div class="pie__legal">
+        <p class="pie__legal-texto">Proyecto de apoyo estudiantil sin ánimo de lucro, de carácter académico e informativo para la comunidad universitaria de la Universidad Nacional de Colombia (Sede Medellín).</p>
+        <p class="pie__copyright">© 2026 · Todos los derechos reservados.</p>
       </div>
     </footer>`;
 }

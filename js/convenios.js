@@ -17,6 +17,8 @@ const ICONOS = {
   codigo: '<path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/>',
   terminal: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3M13 15h4"/>',
   nota: '<path d="M9 18V6l11-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
+  manos: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  alianza: '<path d="m11 17 2 2a1 1 0 0 0 1.4 0l4.6-4.6a2 2 0 0 0 0-2.8l-1.4-1.4a2 2 0 0 0-2.8 0l-.6.6"/><path d="m13 7-2-2a1 1 0 0 0-1.4 0L5 9.6a2 2 0 0 0 0 2.8l1.4 1.4a2 2 0 0 0 2.8 0l.6-.6"/><line x1="8" y1="12" x2="16" y2="12"/>',
 };
 const icono = (nombre) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONOS[nombre] || ''}</svg>`;
 const FLECHA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
@@ -120,6 +122,28 @@ function pintarDetalle(id) {
       if (estado.abierto !== id) return;                 // la persona abrió otro mientras cargaba
       panel.innerHTML = `
         <p class="detalle__que">${esc(d.queEs)}</p>
+
+        ${d.alianzas?.length ? `
+          <section class="alianzas-bloque">
+            <h4>Alianzas Estratégicas para el Bienestar</h4>
+            ${d.alianzasIntro ? `<p class="alianzas-intro">${esc(d.alianzasIntro)}</p>` : ''}
+            <div class="alianzas-grid">
+              ${d.alianzas.map((a) => `
+                <div class="alianza-casilla-azul">
+                  <div class="alianza-casilla__cuerpo">
+                    <span class="alianza-casilla__tag">${esc(a.tipo || 'Alianza Estratégica')}</span>
+                    <h5 class="alianza-casilla__nombre">${esc(a.nombre)}</h5>
+                    <p class="alianza-casilla__desc">${esc(a.descripcion)}</p>
+                  </div>
+                  <div class="alianza-casilla__pie">
+                    <a href="${esc(urlSegura(a.url))}" target="_blank" rel="noopener noreferrer" class="alianza-casilla__btn">
+                      <span>${esc(a.btnTexto || 'Leer más')}</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+                    </a>
+                  </div>
+                </div>`).join('')}
+            </div>
+          </section>` : ''}
 
         <div class="detalle__datos">
           <section class="bloque">

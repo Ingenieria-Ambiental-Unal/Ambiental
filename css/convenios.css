@@ -114,6 +114,7 @@
 }
 .etiqueta--convenio { background: var(--azul); }
 .etiqueta--beneficio { background: #7a8794; }
+.etiqueta--auxilio { background: var(--verde-bosque); }
 .item__categoria { font-size: 13px; color: var(--gris); }
 .item__nombre {
   font-family: var(--letra-titulo);
@@ -334,3 +335,128 @@
   .paso { padding: 12px; gap: 12px; }
   .boton { width: 100%; justify-content: space-between; }
 }
+
+/* ---------- 4. Alianzas Estratégicas para el Bienestar ---------- */
+
+.alianzas-bloque {
+  margin-top: 26px;
+}
+
+.alianzas-bloque h4 {
+  color: var(--verde-bosque);
+  font-family: var(--letra-universidad);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 6px;
+}
+
+.alianzas-intro {
+  font-family: var(--letra-texto);
+  font-size: 14.5px;
+  color: var(--tinta);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.alianzas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 18px;
+}
+
+.alianza-casilla-azul {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 22px 20px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #0d281e 0%, #1c4532 50%, #00606b 100%);
+  border: 1.5px solid rgba(0, 188, 200, 0.4);
+  box-shadow: 0 10px 28px -6px rgba(13, 40, 30, 0.4);
+  color: #ffffff;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.alianza-casilla-azul:hover {
+  transform: translateY(-3px);
+  border-color: var(--lima-vibrante);
+  box-shadow: 0 16px 36px -8px rgba(13, 40, 30, 0.55);
+}
+
+.alianza-casilla__tag {
+  display: inline-block;
+  font-family: var(--letra-universidad);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(208, 255, 1, 0.16);
+  color: var(--lima-vibrante);
+  border: 1px solid rgba(208, 255, 1, 0.35);
+  margin-bottom: 10px;
+}
+
+.alianza-casilla__nombre {
+  font-family: var(--letra-titulo);
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.alianza-casilla__desc {
+  font-family: var(--letra-texto);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #e2f0e8;
+  margin: 0;
+}
+
+.alianza-casilla__pie {
+  display: flex;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  margin-top: auto;
+}
+
+.alianza-casilla__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--lima-vibrante);
+  color: var(--azul-marino);
+  font-family: var(--letra-universidad);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .02em;
+  padding: 9px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.alianza-casilla__btn svg {
+  color: var(--azul-marino);
+  transition: transform 0.2s ease;
+}
+
+.alianza-casilla__btn:hover {
+  background: #ffffff;
+  color: var(--verde-bosque);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.alianza-casilla__btn:hover svg {
+  transform: translate(2px, -2px);
+}
+

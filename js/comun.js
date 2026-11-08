@@ -172,11 +172,12 @@ function pintarPie() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             </a>
           </div>
-                </div>
+        </div>
       </div>
 
       <div class="pie__legal">
-        <p class="pie__legal-texto">Proyecto de apoyo estudiantil sin ánimo de lucro, de carácter académico e informativo para la comunidad universitaria de la Universidad Nacional de Colombia (Sede Medellín).</p>
+        <p class="pie__legal-texto">Proyecto estudiantil sin ánimo de lucro · Iniciativa académica e informativa para la comunidad universitaria de la Universidad Nacional de Colombia — Sede Medellín.</p>
+        <p class="pie__legal-aviso"><strong>Aviso de Propiedad Intelectual y Seguridad:</strong> El diseño, arquitectura de software, código fuente, experiencia de usuario (UX/UI), herramientas interactivas e imágenes de vista previa están protegidos por la Ley 23 de 1982, Decisión Andina 351 y Arts. 270 y 271 del Código Penal Colombiano. Queda prohibida la reproducción parcial o total, plagio, copia de funcionalidades o ingeniería inversa sin autorización previa y por escrito del autor. Los logotipos e identidad visual son obra de la representación estudiantil y su uso requiere autorización expresa de la misma. Cualquier intento de vulneración o alteración informática será sancionado conforme a la Ley 1273 de 2009 (Delitos Informáticos).</p>
         <p class="pie__copyright">© 2026 · Todos los derechos reservados.</p>
       </div>
     </footer>`;

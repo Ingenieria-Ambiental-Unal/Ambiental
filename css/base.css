@@ -1101,15 +1101,18 @@ a { color: var(--azul); }
 }
 
 /* ---------- Pie legal y derechos de autor ---------- */
+
+
+/* ---------- Aviso Legal y Propiedad Intelectual ---------- */
 .pie__legal {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  max-width: 680px;
-  margin-top: 8px;
+  gap: 10px;
+  max-width: 860px;
+  margin: 14px auto 0;
   padding-top: 18px;
-  border-top: 1px solid var(--linea, #dddcd6);
+  border-top: 1px solid var(--linea, rgba(0, 0, 0, 0.12));
   text-align: center;
 }
 
@@ -1119,7 +1122,22 @@ a { color: var(--azul); }
   color: var(--tinta-suave, #555555);
   line-height: 1.5;
   margin: 0;
-  opacity: 0.88;
+  opacity: 0.92;
+}
+
+.pie__legal-aviso {
+  font-family: var(--letra-texto, sans-serif);
+  font-size: 11px;
+  color: var(--tinta-suave, #666666);
+  line-height: 1.55;
+  margin: 0;
+  opacity: 0.8;
+  text-align: justify;
+  text-align-last: center;
+}
+
+.pie__legal-aviso strong {
+  color: var(--tinta, #222222);
 }
 
 .pie__copyright {
@@ -1129,6 +1147,5 @@ a { color: var(--azul); }
   color: var(--tinta-suave, #555555);
   line-height: 1.4;
   margin: 0;
-  opacity: 0.75;
-  letter-spacing: .02em;
+  opacity: 0.85;
 }

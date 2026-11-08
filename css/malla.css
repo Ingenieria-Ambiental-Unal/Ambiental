@@ -791,3 +791,318 @@ body.con-detalle { padding-bottom: 44vh; }
   height: 15px;
   color: var(--color-primario, var(--azul, currentColor));
 }
+
+
+/* ==============================================================================
+   MÓDULO MI AVANCE · INTEGRACIÓN CON LA MALLA CURRICULAR
+   Barra de sesión, sombreado de materias aprobadas y en curso.
+   ============================================================================== */
+
+.malla-sesion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid var(--linea, #dbe4dd);
+  border-left: 5px solid var(--turquesa, #00bcc8);
+  box-shadow: 0 10px 26px -12px rgba(44, 86, 62, .16), 0 2px 6px rgba(0, 0, 0, .04);
+  padding: 16px 22px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.malla-sesion__info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.malla-sesion__icono {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--lima-suave, #ecffb6);
+  border: 1.5px solid rgba(0, 188, 200, 0.35);
+  color: var(--verde-bosque, #2c563e);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.malla-sesion__icono svg {
+  width: 22px;
+  height: 22px;
+}
+
+.malla-sesion__textos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.malla-sesion__fila-titulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.malla-sesion__etiqueta {
+  font-family: var(--letra-titulo);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--verde-bosque, #2c563e);
+  font-weight: 700;
+}
+
+.malla-sesion__usuario {
+  font-family: var(--letra-titulo);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--azul-oscuro, #031d44);
+}
+
+.malla-sesion__resumen-texto {
+  margin: 0;
+  font-size: 13px;
+  color: var(--tinta-suave, #2d3f35);
+}
+
+.malla-sesion__acciones {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.malla-sesion__btn-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--linea, #dbe4dd);
+  background: var(--papel, #f4f6f4);
+  font-family: var(--letra-titulo);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--verde-bosque, #2c563e);
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.malla-sesion__btn-toggle:hover {
+  background: #e5ece6;
+}
+
+.malla-sesion__btn-toggle-switch {
+  width: 32px;
+  height: 18px;
+  border-radius: 999px;
+  background: #cbd5e1;
+  position: relative;
+  transition: background .2s ease;
+}
+
+.malla-sesion__btn-toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform .2s ease;
+}
+
+.malla-sesion__btn-toggle.is-activo .malla-sesion__btn-toggle-switch {
+  background: var(--turquesa, #00bcc8);
+}
+
+.malla-sesion__btn-toggle.is-activo .malla-sesion__btn-toggle-switch::after {
+  transform: translateX(14px);
+}
+
+.malla-sesion__enlace-avance {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--verde-bosque, #2c563e);
+  color: #ffffff;
+  font-family: var(--letra-titulo);
+  font-size: 12.5px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(44, 86, 62, 0.25);
+  transition: all .2s ease;
+}
+
+.malla-sesion__enlace-avance:hover {
+  background: var(--turquesa, #00bcc8);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* ---------- Banner Invitado (Sin Avance Cargado) ---------- */
+.malla-invitado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #fbfdfc;
+  border: 1px dashed var(--turquesa, #00bcc8);
+  border-radius: 14px;
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.malla-invitado__icono {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(0, 188, 200, 0.15);
+  color: var(--turquesa, #00bcc8);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.malla-invitado__icono svg {
+  width: 20px;
+  height: 20px;
+}
+
+.malla-invitado__cuerpo {
+  flex: 1;
+  min-width: 240px;
+}
+
+.malla-invitado__texto {
+  margin: 0;
+  font-size: 13px;
+  color: var(--tinta, #14221d);
+  line-height: 1.45;
+}
+
+.malla-invitado__btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--verde-bosque, #2c563e);
+  color: #fff;
+  font-family: var(--letra-titulo);
+  font-size: 12.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.malla-invitado__btn:hover {
+  background: var(--turquesa, #00bcc8);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* ---------- Estilos de Materias Aprobadas y En Curso ---------- */
+.materia--aprobada {
+  background: color-mix(in srgb, var(--color) 16%, #ffffff) !important;
+  border: 1.5px solid color-mix(in srgb, var(--color) 45%, #ffffff) !important;
+  box-shadow: 0 2px 8px -2px color-mix(in srgb, var(--color) 35%, transparent), 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+.materia--aprobada:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px -3px color-mix(in srgb, var(--color) 48%, transparent), 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.materia--aprobada .materia__nombre {
+  color: #14221d;
+  font-weight: 600;
+}
+
+.materia--aprobada .materia__codigo {
+  background: color-mix(in srgb, var(--color) 26%, #ffffff) !important;
+  color: color-mix(in srgb, var(--color) 85%, #14221d) !important;
+  font-weight: 600;
+}
+
+.materia--bolsa.materia--aprobada .materia__codigo {
+  font-style: normal;
+}
+
+.materia__tag-aprobada {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #15803d;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+.materia--en-curso {
+  background: #fffdf5 !important;
+  border: 1.5px dashed #d97706 !important;
+  box-shadow: 0 2px 7px -2px rgba(217, 119, 6, 0.25), 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+}
+
+.materia--en-curso .materia__nombre {
+  color: #78350f;
+  font-weight: 600;
+}
+
+.materia--en-curso .materia__codigo {
+  background: #fef3c7 !important;
+  color: #b45309 !important;
+  font-weight: 600;
+}
+
+.materia__tag-curso {
+  font-size: 10px;
+  color: #b45309;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+.leyenda__punto--aprobada {
+  background: #16a34a !important;
+  box-shadow: 0 0 6px rgba(22, 163, 74, 0.6);
+}
+
+.leyenda__punto--curso {
+  background: #d97706 !important;
+  box-shadow: 0 0 6px rgba(217, 119, 6, 0.6);
+}
+
+@media (max-width: 640px) {
+  .malla-sesion {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 14px 16px;
+  }
+  .malla-sesion__acciones {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .malla-invitado {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .malla-invitado__btn {
+    text-align: center;
+    width: 100%;
+  }
+}

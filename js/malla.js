@@ -50,9 +50,233 @@ function prepararDatos([componentes, plan, asignaturas]) {
   $('#malla-antetitulo').textContent = `${plan.length} semestres · ${totalCreditos} créditos`;
 }
 
+/* ==============================================================================
+   ESTADO DE PROGRESO DEL ESTUDIANTE (MÓDULO MI AVANCE)
+   ============================================================================== */
+
+const estadoProgreso = {
+  activo: true,
+  historia: null,
+  aprobadasPlan: 0,
+  totalPlanAsignaturas: 0,
+  creditosAprobadosPlan: 0,
+  porcentajePlan: 0,
+  materiasPorCodigo: new Map(),
+  bolsasCumplidas: new Set(),
+};
+
+const baseCodigo = (c) => String(c || '').split('-')[0].trim();
+
+function crearIndiceProgreso(historia) {
+  estadoProgreso.materiasPorCodigo.clear();
+  estadoProgreso.bolsasCumplidas.clear();
+
+  (historia.materias || []).forEach((m) => {
+    const raw = String(m.codigo || '').trim();
+    const base = baseCodigo(raw);
+    const est = (m.estado || '').toUpperCase();
+    const esAprobada = ['APROBADA', 'VALIDADA', 'CONVALIDADA'].includes(est);
+
+    const actual = estadoProgreso.materiasPorCodigo.get(raw);
+    if (!actual || (!['APROBADA', 'VALIDADA', 'CONVALIDADA'].includes(actual.estado) && esAprobada)) {
+      estadoProgreso.materiasPorCodigo.set(raw, m);
+      if (base) estadoProgreso.materiasPorCodigo.set(base, m);
+    }
+  });
+
+  calcularBolsasCumplidas(historia);
+  actualizarMetricasPlan();
+}
+
+function consultarProgresoMateria(codigo) {
+  if (!estadoProgreso.activo || !estadoProgreso.historia) return null;
+  const raw = String(codigo || '').trim();
+  const base = baseCodigo(raw);
+  return estadoProgreso.materiasPorCodigo.get(raw) || estadoProgreso.materiasPorCodigo.get(base) || null;
+}
+
+function calcularBolsasCumplidas(historia) {
+  estadoProgreso.bolsasCumplidas.clear();
+
+  const creditosPorBolsa = {
+    'ciencias-basicas': 0,
+    'basicas-ingenieria': 0,
+    'tecnologias-manejo-ambiental': 0,
+    'ciencias-medioambientales': 0,
+    'optativas-profesionales': 0,
+    'libre-eleccion': 0,
+  };
+
+  const discOptativasPool = ['basicas-ingenieria', 'tecnologias-manejo-ambiental', 'ciencias-medioambientales', 'optativas-profesionales'];
+  let discOptativasNoAsignadas = 0;
+
+  for (const m of (historia.materias || [])) {
+    if (!['APROBADA', 'VALIDADA', 'CONVALIDADA'].includes((m.estado || '').toUpperCase())) continue;
+    const tip = (m.tipologia || '').toUpperCase();
+    const cr = m.creditos || 0;
+
+    const a = estado.asignaturas.get(m.codigo) || estado.asignaturas.get(baseCodigo(m.codigo));
+    if (a && !a.obligatoria && creditosPorBolsa[a.agrupacion] !== undefined) {
+      creditosPorBolsa[a.agrupacion] += cr;
+    } else if (tip.includes('LIBRE')) {
+      creditosPorBolsa['libre-eleccion'] += cr;
+    } else if (tip.includes('FUND. OPTATIVA')) {
+      creditosPorBolsa['ciencias-basicas'] += cr;
+    } else if (tip.includes('DISCIPLINAR OPTATIVA')) {
+      discOptativasNoAsignadas += cr;
+    }
+  }
+
+  if (historia.resumen) {
+    if (historia.resumen['LIBRE ELECCIÓN']?.aprobados) {
+      creditosPorBolsa['libre-eleccion'] = Math.max(creditosPorBolsa['libre-eleccion'], historia.resumen['LIBRE ELECCIÓN'].aprobados);
+    }
+    if (historia.resumen['FUND. OPTATIVA']?.aprobados) {
+      creditosPorBolsa['ciencias-basicas'] = Math.max(creditosPorBolsa['ciencias-basicas'], historia.resumen['FUND. OPTATIVA'].aprobados);
+    }
+    if (historia.resumen['DISCIPLINAR OPTATIVA']?.aprobados) {
+      const sumaDisc = discOptativasPool.reduce((acc, k) => acc + creditosPorBolsa[k], 0);
+      const totalDisc = historia.resumen['DISCIPLINAR OPTATIVA'].aprobados;
+      if (totalDisc > sumaDisc) {
+        discOptativasNoAsignadas = Math.max(discOptativasNoAsignadas, totalDisc - sumaDisc);
+      }
+    }
+  }
+
+  const disponibles = { ...creditosPorBolsa };
+  let extraDisc = discOptativasNoAsignadas;
+
+  for (const s of estado.plan) {
+    s.items.forEach((item, pos) => {
+      if (item.tipo === 'bolsa') {
+        const ag = item.agrupacion;
+        let cump = false;
+        if (disponibles[ag] >= item.creditos) {
+          disponibles[ag] -= item.creditos;
+          cump = true;
+        } else if (discOptativasPool.includes(ag) && extraDisc >= item.creditos) {
+          extraDisc -= item.creditos;
+          cump = true;
+        }
+        if (cump) {
+          estadoProgreso.bolsasCumplidas.add(`b-${s.semestre}-${pos}`);
+        }
+      }
+    });
+  }
+}
+
+function actualizarMetricasPlan() {
+  let obligatoriasAprobadas = 0;
+  let totalObligatorias = 0;
+  let creditosAprobados = 0;
+
+  for (const s of estado.plan) {
+    for (const item of s.items) {
+      if (item.tipo === 'asignatura') {
+        totalObligatorias++;
+        const prog = consultarProgresoMateria(item.codigo);
+        if (prog && ['APROBADA', 'VALIDADA', 'CONVALIDADA'].includes((prog.estado || '').toUpperCase())) {
+          obligatoriasAprobadas++;
+          creditosAprobados += (item.creditos || 0);
+        }
+      }
+    }
+  }
+
+  for (const s of estado.plan) {
+    s.items.forEach((item, pos) => {
+      if (item.tipo === 'bolsa' && estadoProgreso.bolsasCumplidas.has(`b-${s.semestre}-${pos}`)) {
+        creditosAprobados += (item.creditos || 0);
+      }
+    });
+  }
+
+  Object.assign(estadoProgreso, {
+    aprobadasPlan: obligatoriasAprobadas,
+    totalPlanAsignaturas: totalObligatorias,
+    creditosAprobadosPlan: creditosAprobados,
+    porcentajePlan: Math.min(100, Math.round((creditosAprobados / 174) * 100)),
+  });
+}
+
+function cargarProgresoUsuario() {
+  let textoHistoria = '';
+  let nombreUsuario = '';
+
+  try {
+    const guardado = JSON.parse(localStorage.getItem('ambiental.avance.v1') || '{}');
+    if (guardado.texto) {
+      textoHistoria = guardado.texto;
+      nombreUsuario = guardado.nombre || '';
+    }
+  } catch {}
+
+  if (textoHistoria && typeof leerHistoria === 'function') {
+    try {
+      const historia = leerHistoria(textoHistoria);
+      if (historia && (historia.materias?.length || Object.keys(historia.resumen || {}).length)) {
+        estadoProgreso.historia = historia;
+        if (!nombreUsuario && historia.nombre) nombreUsuario = historia.nombre;
+        crearIndiceProgreso(historia);
+      }
+    } catch (e) {
+      console.warn('Error procesando historia en la malla de Ambiental:', e);
+    }
+  }
+
+  actualizarBannerSesion(nombreUsuario);
+}
+
+function actualizarBannerSesion(nombreUsuario) {
+  const bannerSesion = $('#malla-sesion');
+  const bannerInvitado = $('#malla-invitado');
+  if (!bannerSesion) return;
+
+  if (estadoProgreso.historia) {
+    bannerSesion.hidden = false;
+    if (bannerInvitado) bannerInvitado.hidden = true;
+
+    const elNombre = $('#malla-usuario-nombre');
+    const elResumen = $('#malla-resumen-texto');
+
+    if (elNombre) elNombre.textContent = nombreUsuario || estadoProgreso.historia.nombre || 'Estudiante';
+    if (elResumen) {
+      const totalCrAprob = estadoProgreso.historia.resumen?.TOTAL?.aprobados || estadoProgreso.creditosAprobadosPlan;
+      const pct = Math.round(((totalCrAprob / 174) * 100) * 10) / 10;
+      elResumen.innerHTML = `Llevas <strong>${totalCrAprob} de 174 créditos</strong> aprobados (${pct}%) · <strong>${estadoProgreso.aprobadasPlan}</strong> asignaturas aprobadas en la malla oficial.`;
+    }
+  } else {
+    bannerSesion.hidden = true;
+    if (bannerInvitado) bannerInvitado.hidden = false;
+  }
+}
+
+function iniciarControlesSesion() {
+  const btnToggle = document.getElementById('btn-toggle-sombreado');
+  if (!btnToggle) return;
+
+  btnToggle.addEventListener('click', () => {
+    estadoProgreso.activo = !estadoProgreso.activo;
+    btnToggle.classList.toggle('is-activo', estadoProgreso.activo);
+    btnToggle.setAttribute('aria-pressed', estadoProgreso.activo ? 'true' : 'false');
+    const label = btnToggle.querySelector('.malla-sesion__btn-toggle-label');
+    if (label) label.textContent = estadoProgreso.activo ? 'Sombrear aprobadas' : 'Sombreado desactivado';
+
+    if (estadoProgreso.historia) {
+      crearIndiceProgreso(estadoProgreso.historia);
+    }
+    pintarLeyenda();
+    pintarMalla();
+    pintarCatalogo();
+  });
+}
+
 Promise.all([cargarDatos('malla/componentes'), cargarDatos('malla/plan'), cargarDatos('malla/asignaturas')])
   .then((datos) => {
     prepararDatos(datos);
+    cargarProgresoUsuario();
+    iniciarControlesSesion();
     pintarLeyenda();
     pintarMalla();
     iniciarCatalogo();
@@ -78,14 +302,43 @@ function pintarLeyenda() {
 
 function casillaAsignatura(codigo) {
   const a = estado.asignaturas.get(codigo);
+  if (!a) {
+    return `
+    <li>
+      <button class="materia" type="button" data-codigo="${esc(codigo)}"
+        style="--color: var(--verde-bosque)" aria-label="${esc(codigo)}">
+        <span class="materia__nombre">${esc(codigo)}</span>
+        <span class="materia__cred">—</span>
+        <span class="materia__codigo">${esc(codigo)}</span>
+      </button>
+    </li>`;
+  }
   const wppIndicador = a.whatsapp ? `<span class="materia__wpp-punto" title="Grupo de WhatsApp disponible">💬</span>` : '';
+
+  let claseEstado = '';
+  let estadoAria = '';
+  let tagProgreso = '';
+
+  const prog = consultarProgresoMateria(codigo);
+  if (prog) {
+    if (['APROBADA', 'VALIDADA', 'CONVALIDADA'].includes(prog.estado)) {
+      claseEstado = 'materia--aprobada';
+      estadoAria = ', Aprobada';
+      tagProgreso = `<span class="materia__tag-aprobada" title="Aprobada (Nota: ${prog.nota !== null ? prog.nota : 'AP'})">✓</span>`;
+    } else if (['INSCRITA', 'CURSANDO', 'EN CURSO'].includes(prog.estado) || (!prog.estado && !prog.nota)) {
+      claseEstado = 'materia--en-curso';
+      estadoAria = ', En curso';
+      tagProgreso = `<span class="materia__tag-curso" title="En curso este periodo">▶</span>`;
+    }
+  }
+
   return `
     <li>
-      <button class="materia ${a.whatsapp ? 'materia--con-wpp' : ''}" type="button" data-codigo="${esc(codigo)}" data-agrupacion="${esc(a.agrupacion)}"
-        style="--color: ${colorDe(a)}" aria-label="${esc(a.nombre)}, ${a.creditos} créditos${a.whatsapp ? ', con grupo de WhatsApp' : ''}">
+      <button class="materia ${claseEstado} ${a.whatsapp ? 'materia--con-wpp' : ''}" type="button" data-codigo="${esc(codigo)}" data-agrupacion="${esc(a.agrupacion)}"
+        style="--color: ${colorDe(a)}" aria-label="${esc(a.nombre)}, ${a.creditos} créditos${estadoAria}${a.whatsapp ? ', con grupo de WhatsApp' : ''}">
         <span class="materia__nombre">${esc(a.nombre)}</span>
         <span class="materia__cred">${a.creditos}</span>
-        <span class="materia__codigo">${esc(a.codigo)}${wppIndicador}</span>
+        <span class="materia__codigo">${esc(a.codigo)}${tagProgreso}${wppIndicador}</span>
       </button>
     </li>`;
 }
@@ -93,15 +346,29 @@ function casillaAsignatura(codigo) {
 function casillaBolsa(bolsa, semestre, posicion) {
   const agrupacion = buscarAgrupacion(bolsa.agrupacion);
   const color = buscarComponente(agrupacion.componente).color;
+  const idBolsa = `b-${semestre}-${posicion}`;
+
+  let claseEstado = '';
+  let estadoAria = '';
+  let tagProgreso = '';
+
+  if (estadoProgreso.activo && estadoProgreso.bolsasCumplidas.has(idBolsa)) {
+    claseEstado = 'materia--aprobada materia--bolsa-cumplida';
+    estadoAria = ', Requisito cubierto con tus materias cursadas';
+    tagProgreso = `<span class="materia__tag-aprobada" title="Créditos cubiertos">✓</span>`;
+  }
+
+  const textoCodigo = bolsa.agrupacion === 'libre-eleccion' ? 'a tu elección' : 'ver opciones';
+
   return `
     <li>
-      <button class="materia materia--bolsa" type="button" data-bolsa="${esc(bolsa.agrupacion)}"
-        data-id="b-${semestre}-${posicion}" data-agrupacion="${esc(bolsa.agrupacion)}"
+      <button class="materia materia--bolsa ${claseEstado}" type="button" data-bolsa="${esc(bolsa.agrupacion)}"
+        data-id="${idBolsa}" data-agrupacion="${esc(bolsa.agrupacion)}"
         data-creditos="${bolsa.creditos}" data-nombre="${esc(bolsa.nombre)}"
-        style="--color: ${color}" aria-label="${esc(bolsa.nombre)}, ${bolsa.creditos} créditos">
+        style="--color: ${color}" aria-label="${esc(bolsa.nombre)}, ${bolsa.creditos} créditos${estadoAria}">
         <span class="materia__nombre">${esc(bolsa.nombre)}</span>
         <span class="materia__cred">${bolsa.creditos}</span>
-        <span class="materia__codigo">${bolsa.agrupacion === 'libre-eleccion' ? 'a tu elección' : 'ver opciones'}</span>
+        <span class="materia__codigo">${tagProgreso}${textoCodigo}</span>
       </button>
     </li>`;
 }
@@ -432,16 +699,25 @@ function pintarCatalogo() {
 
   $('#catalogo').innerHTML = agrupacion.id === 'libre-eleccion'
     ? `<li class="catalogo__vacio">El componente de libre elección no tiene asignaturas fijas: se cursa en las casillas «Libre elección» de la malla.</li>`
-    : visibles.map((a) => `
+    : visibles.map((a) => {
+        const prog = consultarProgresoMateria(a.codigo);
+        const tagCatalogo = prog && ['APROBADA', 'VALIDADA', 'CONVALIDADA'].includes(prog.estado)
+          ? ' · <span style="color:#10B981;font-weight:700">✓ Aprobada</span>'
+          : (prog && ['INSCRITA', 'CURSANDO', 'EN CURSO'].includes(prog.estado)
+              ? ' · <span style="color:#00bcc8;font-weight:700">▶ En curso</span>'
+              : '');
+
+        return `
         <li>
           <button class="tarjeta" type="button" data-codigo="${esc(a.codigo)}" style="--color: ${colorDe(a)}">
             <span class="tarjeta__nombre">${esc(a.nombre)}</span>
             <span class="tarjeta__pie">
-              <span><span class="tarjeta__tipo">${a.obligatoria ? 'Obligatoria' : 'Optativa'}</span> · ${esc(a.codigo)}${a.whatsapp ? ' · <span class="tarjeta__wpp" title="Tiene grupo de WhatsApp">💬 WhatsApp</span>' : ''}</span>
+              <span><span class="tarjeta__tipo">${a.obligatoria ? 'Obligatoria' : 'Optativa'}</span> · ${esc(a.codigo)}${tagCatalogo}${a.whatsapp ? ' · <span class="tarjeta__wpp" title="Tiene grupo de WhatsApp">💬 WhatsApp</span>' : ''}</span>
               <span class="tarjeta__cred" title="Créditos">${creditosTexto(a.creditos)}</span>
             </span>
           </button>
-        </li>`).join('');
+        </li>`;
+      }).join('');
 
   pintarPaginacion(totalPaginas, filtradas.length, inicio, visibles.length);
 }

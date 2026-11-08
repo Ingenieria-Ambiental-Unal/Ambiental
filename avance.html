@@ -1,0 +1,86 @@
+<!doctype html>
+<!-- ==============================================================================
+   PORTAL WEB OFICIAL · INGENIERÍA AMBIENTAL · FACULTAD DE MINAS · UNAL MEDELLÍN
+   Módulo Mi Avance: panel de progreso, proyección de graduación y bitácora académica.
+   Plan 3529 · 174 créditos exigidos · Todos los derechos reservados © 2026.
+   ============================================================================== -->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi Avance · Ingeniería Ambiental UNAL Medellín</title>
+  <meta name="description" content="Consulta tu nivel en la carrera de Ingeniería Ambiental, tu proyección de graduación, créditos aprobados y materias cursadas a partir de tu historia académica del SIA.">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@500;700&display=swap">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/avance.css">
+</head>
+<body data-pagina="avance">
+
+  <div id="barra"></div>
+
+  <!-- PORTADA -->
+  <section class="portada portada--corta foto foto--panoramica">
+    <div class="contenedor portada__contenido">
+      <div class="portada__logo-wrap">
+        <img class="portada__logo" src="img/logo-ambiental.png" alt="Logo de Ingeniería Ambiental · Facultad de Minas" width="115" height="115">
+      </div>
+      <p class="portada__lugar">Tu progreso en la carrera · Facultad de Minas · UNAL Medellín</p>
+      <h1 class="portada__titulo">
+        <span class="portada__antetitulo">Mi</span>
+        <span class="letras-varsity">Avance</span>
+      </h1>
+      <p class="portada__texto">Herramienta interactiva para estudiantes de Ingeniería Ambiental. Consulta tu nivel de progreso, créditos aprobados, proyección de graduación estimada y bitácora de materias.</p>
+    </div>
+  </section>
+
+  <main>
+    <section class="seccion avance" aria-label="Mi avance en la carrera">
+      <div class="contenedor avance__contenedor">
+
+        <!-- ENTRADA: CARGAR / ACTUALIZAR HISTORIA ACADÉMICA -->
+        <details class="entrada" id="entrada" open>
+          <summary class="entrada__resumen">
+            <span class="entrada__resumen-icono" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </span>
+            <span class="entrada__resumen-texto">Cargar o actualizar mi historia académica del SIA</span>
+            <span class="entrada__resumen-flecha" aria-hidden="true">▼</span>
+          </summary>
+          <div class="entrada__cuerpo">
+            <ol class="entrada__pasos">
+              <li><b>1</b><span>Entra al <strong>SIA</strong> y abre el módulo <strong>Historia Académica</strong>.</span></li>
+              <li><b>2</b><span>Selecciona todo con <kbd>Ctrl</kbd> + <kbd>A</kbd> y copia con <kbd>Ctrl</kbd> + <kbd>C</kbd>.</span></li>
+              <li><b>3</b><span>Pega aquí abajo y dale <strong>Cargar mi historia</strong>.</span></li>
+            </ol>
+            <label class="entrada__etiqueta" for="historia-texto">Pega aquí el contenido copiado del SIA (Ctrl + V):</label>
+            <textarea id="historia-texto" class="entrada__texto" rows="7" spellcheck="false" placeholder="Pega aquí todo el texto copiado de tu Historia Académica en el SIA (Ctrl + V)..."></textarea>
+            <p class="entrada__error" id="entrada-error" role="alert" hidden></p>
+            <div class="entrada__acciones">
+              <button type="button" class="boton-juego" id="btn-guardar">Cargar mi historia</button>
+              <button type="button" class="boton-juego boton-juego--suave" id="btn-borrar">Limpiar datos locales</button>
+            </div>
+            <p class="entrada__privacidad">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>Tus datos se procesan exclusivamente en tu navegador y se almacenan en la memoria local (localStorage). No se envían a ningún servidor ni base de datos externa.</span>
+            </p>
+          </div>
+        </details>
+
+        <!-- PANTALLA DE JUEGO / AVANCE -->
+        <div id="avance-juego" hidden></div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="pie"></div>
+
+  <!-- SCRIPTS -->
+  <script src="js/comun.js"></script>
+  <script src="js/avance-lector.js"></script>
+  <script src="js/avance.js"></script>
+</body>
+</html>

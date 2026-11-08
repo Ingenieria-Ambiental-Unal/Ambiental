@@ -61,7 +61,7 @@
               </div>
 
               <div class="malla-drive__fila-acciones">
-                <a class="malla-drive__btn-principal" href="https://drive.google.com/drive/folders/0AEk8YJGqI3OvUk9PVA?hl=es" target="_blank" rel="noopener noreferrer">
+                <a class="malla-drive__btn-principal" href="https://drive.google.com/drive/folders/1YukBqotbcPo7iUBFZiXW-5hwcQx68Tz4" target="_blank" rel="noopener noreferrer">
                   <span>Ir a la Carpeta de Recursos</span>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true">
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
@@ -81,6 +81,43 @@
               </div>
             </div>
           </div>
+        </aside>
+
+                <!-- BARRA DE SESIÓN Y AVANCE PERSONALIZADO EN LA MALLA -->
+        <div class="malla-sesion" id="malla-sesion" hidden>
+          <div class="malla-sesion__info">
+            <span class="malla-sesion__icono" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </span>
+            <div class="malla-sesion__textos">
+              <div class="malla-sesion__fila-titulo">
+                <span class="malla-sesion__etiqueta">Progreso en la malla</span>
+                <span class="malla-sesion__usuario" id="malla-usuario-nombre">Estudiante</span>
+              </div>
+              <p class="malla-sesion__resumen-texto" id="malla-resumen-texto">Cargando tu avance...</p>
+            </div>
+          </div>
+          <div class="malla-sesion__acciones">
+            <button type="button" class="malla-sesion__btn-toggle is-activo" id="btn-toggle-sombreado" aria-pressed="true" title="Activar o desactivar el sombreado de materias aprobadas">
+              <span class="malla-sesion__btn-toggle-switch"></span>
+              <span class="malla-sesion__btn-toggle-label">Sombrear aprobadas</span>
+            </button>
+            <a href="avance.html" class="malla-sesion__enlace-avance">
+              <span>Mi Avance</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- AVISO INFORMATIVO PARA INVITADOS SIN AVANCE CARGADO -->
+        <aside class="malla-invitado" id="malla-invitado" hidden>
+          <div class="malla-invitado__icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          </div>
+          <div class="malla-invitado__cuerpo">
+            <p class="malla-invitado__texto"><strong>¿Estudias Ingeniería Ambiental en la UNAL?</strong> Carga tu historia académica del SIA en Mi Avance para sombrear automáticamente en la malla las asignaturas que ya aprobaste.</p>
+          </div>
+          <a href="avance.html" class="malla-invitado__btn">Cargar mi avance</a>
         </aside>
 
         <div class="seccion-titulo">
@@ -126,6 +163,7 @@
   <div id="pie"></div>
 
   <script src="js/comun.js"></script>
+  <script src="js/avance-lector.js"></script>
   <script src="js/malla.js"></script>
 </body>
 </html>

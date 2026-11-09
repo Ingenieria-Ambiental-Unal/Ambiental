@@ -293,6 +293,7 @@
 
     return `
       <section class="panel bitacora" aria-label="Bitácora de materias">
+        <p class="panel__titulo">Bitácora académica · materias cursadas y estado</p>
         <div class="bitacora__filtros">
           <input type="search" id="busqueda-bitacora" class="bitacora__buscar" placeholder="Buscar por asignatura o código..." value="${esc(estado.busquedaBitacora)}">
           <select id="filtro-periodo" class="bitacora__select">
@@ -325,14 +326,17 @@
               ${filtradas.map((m) => {
                 const est = (m.estado || '').toUpperCase();
                 const claseEstado = ['APROBADA', 'VALIDADA', 'CONVALIDADA'].includes(est) ? 'ok' : est === 'REPROBADA' ? 'mal' : 'curso';
+                const tip = (m.tipologia || '').toUpperCase();
+                const claseTip = tip.includes('FUND') ? 'fund' : tip.includes('DISC') ? 'disc' : tip.includes('LIBRE') ? 'libre' : 'gen';
+                const claseNota = m.nota !== null ? (m.nota >= 3.0 ? 'aprobada' : 'reprobada') : 'vacia';
                 return `
                   <tr class="bitacora__fila bitacora__fila--${claseEstado}">
                     <td>${esc(m.periodo ? etiquetaPeriodo(m.periodo) : '—')}</td>
                     <td><code>${esc(m.codigo)}</code></td>
                     <td><strong>${esc(m.nombre)}</strong></td>
                     <td>${m.creditos}</td>
-                    <td><small>${esc(m.tipologia)}</small></td>
-                    <td><b>${m.nota !== null ? formatear(m.nota, 1) : '—'}</b></td>
+                    <td><small class="bitacora__tip bitacora__tip--${claseTip}">${esc(m.tipologia)}</small></td>
+                    <td><b class="bitacora__nota bitacora__nota--${claseNota}">${m.nota !== null ? formatear(m.nota, 1) : '—'}</b></td>
                     <td><span class="bitacora__tag bitacora__tag--${claseEstado}">${esc(m.estado || 'EN CURSO')}</span></td>
                   </tr>`;
               }).join('')}

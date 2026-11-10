@@ -1,0 +1,728 @@
+/* ==============================================================================
+   PORTAL WEB OFICIAL · INGENIERÍA AMBIENTAL · UNAL SEDE MEDELLÍN
+   Arquitectura de software, maquetación y desarrollo de plataforma por:
+   Santiago Escobar Arias · Representante Estudiantil de Sistemas e Informática
+   Adaptado e impulsado con la Representación Estudiantil de Ingeniería Ambiental:
+   Emmanuel Florez Rodriguez · Representante Estudiantil de Ingeniería Ambiental
+   Facultad de Minas — Universidad Nacional de Colombia, Sede Medellín
+   ============================================================================== */
+
+/* ---------- sofIA: Asistente Virtual Inteligente de Ingeniería Ambiental UNAL ---------- */
+
+:root {
+  --sofia-verde-principal: #028090;
+  --sofia-verde-electrico: #00bcc8;
+  --sofia-verde-bosque: #2c563e;
+  --sofia-lima-acento: #d0ff01;
+  --sofia-fondo-tarjeta: rgba(7, 24, 20, 0.95);
+  --sofia-borde: rgba(0, 188, 200, 0.35);
+  --sofia-brillo: rgba(0, 188, 200, 0.25);
+  --sofia-texto: #eaf8f5;
+  --sofia-texto-suave: #9bdcd5;
+  --sofia-sombra: 0 20px 50px rgba(0, 0, 0, 0.65);
+}
+
+/* ==========================================================================
+   1. BOTÓN FLOTANTE (TRIGGER)
+   ========================================================================== */
+
+.sofia-flotante-wrap {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.sofia-flotante-wrap > * {
+  pointer-events: auto;
+}
+
+/* Tooltip / Globo de bienvenida inicial */
+.sofia-globo-bienvenida {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(10, 34, 28, 0.94);
+  border: 1px solid var(--sofia-borde);
+  backdrop-filter: blur(12px);
+  padding: 8px 14px 8px 16px;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 16px var(--sofia-brillo);
+  color: var(--sofia-texto);
+  font-family: var(--letra-texto, 'Plus Jakarta Sans', sans-serif);
+  font-size: 13px;
+  line-height: 1.25;
+  cursor: pointer;
+  animation: sofiaGloboEntrar 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.2s, background 0.2s;
+  max-width: 290px;
+}
+
+.sofia-globo-bienvenida:hover {
+  transform: translateY(-2px);
+  background: rgba(14, 46, 38, 0.98);
+}
+
+.sofia-globo-texto strong {
+  color: var(--sofia-verde-electrico);
+  font-weight: 600;
+}
+
+.sofia-globo-cerrar {
+  background: none;
+  border: none;
+  color: var(--sofia-texto-suave);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+}
+
+.sofia-globo-cerrar:hover {
+  color: #fff;
+}
+
+@keyframes sofiaGloboEntrar {
+  from { opacity: 0; transform: translateY(12px) scale(0.92); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Botón circular principal */
+.sofia-boton {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  background: linear-gradient(135deg, #145a32 0%, #028090 50%, #00bcc8 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -2px rgba(2, 128, 144, 0.6), 0 0 25px rgba(0, 188, 200, 0.4);
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s, border-color 0.25s;
+  outline: none;
+  padding: 0;
+}
+
+.sofia-boton:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 12px 32px rgba(2, 128, 144, 0.75), 0 0 35px rgba(0, 188, 200, 0.6);
+  border-color: #fff;
+}
+
+.sofia-boton:active {
+  transform: scale(0.96);
+}
+
+/* Efecto de anillo pulsante (halo de radar) */
+.sofia-boton::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--sofia-verde-electrico);
+  opacity: 0;
+  pointer-events: none;
+  animation: sofiaHalo 2.8s infinite cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes sofiaHalo {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { opacity: 0.3; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+
+/* Ícono del robot/chatbot */
+.sofia-boton__icono {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sofia-boton:hover .sofia-boton__icono {
+  transform: rotate(10deg) scale(1.08);
+}
+
+.sofia-boton__icono svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+}
+
+/* Badge indicador "En línea / IA" */
+.sofia-boton__badge {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--sofia-lima-acento);
+  border: 2.5px solid #061e18;
+  box-shadow: 0 0 8px var(--sofia-lima-acento);
+  animation: sofiaPuntoOnline 2s infinite ease-in-out;
+}
+
+@keyframes sofiaPuntoOnline {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(0.92); }
+}
+
+/* ==========================================================================
+   2. VENTANA PRINCIPAL DEL CHATBOT
+   ========================================================================== */
+
+.sofia-ventana {
+  position: fixed;
+  bottom: 98px;
+  right: 24px;
+  width: 410px;
+  max-width: calc(100vw - 32px);
+  height: min(640px, calc(100vh - 120px));
+  background: var(--sofia-fondo-tarjeta);
+  border: 1.5px solid var(--sofia-borde);
+  border-radius: 22px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--sofia-sombra), 0 0 45px rgba(0, 188, 200, 0.18);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1000;
+  transform-origin: bottom right;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.7) translateY(40px);
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.28s;
+  pointer-events: none;
+}
+
+/* Estado abierto con animación suave y efecto de expansión */
+.sofia-ventana.is-abierta {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   3. CABECERA DE LA VENTANA
+   ========================================================================== */
+
+.sofia-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  background: linear-gradient(90deg, rgba(10, 36, 30, 0.95), rgba(4, 18, 15, 0.98));
+  border-bottom: 1px solid rgba(0, 188, 200, 0.22);
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.sofia-cabecera__info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.sofia-cabecera__avatar {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #145a32, #00bcc8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 14px rgba(0, 188, 200, 0.45);
+  flex-shrink: 0;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+}
+
+.sofia-cabecera__avatar svg {
+  width: 24px;
+  height: 24px;
+  color: #fff;
+}
+
+.sofia-cabecera__titulos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sofia-cabecera__nombre-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sofia-cabecera__nombre {
+  font-family: var(--letra-titulo, 'Outfit', sans-serif);
+  font-weight: 700;
+  font-size: 17px;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+}
+
+.sofia-tag-ia {
+  background: linear-gradient(135deg, #028090, #00bcc8);
+  color: #041a16;
+  font-family: var(--letra-universidad, monospace);
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 6px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sofia-cabecera__subtitulo {
+  font-family: var(--letra-texto, 'Plus Jakarta Sans', sans-serif);
+  font-size: 12px;
+  color: var(--sofia-texto-suave);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sofia-punto-verde {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sofia-lima-acento);
+  box-shadow: 0 0 6px var(--sofia-lima-acento);
+  display: inline-block;
+}
+
+.sofia-cabecera__acciones {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sofia-btn-accion {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--sofia-texto-suave);
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+  padding: 0;
+}
+
+.sofia-btn-accion:hover {
+  background: rgba(0, 188, 200, 0.2);
+  color: #ffffff;
+  border-color: rgba(0, 188, 200, 0.4);
+  transform: scale(1.05);
+}
+
+.sofia-btn-accion svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==========================================================================
+   4. ÁREA DE MENSAJES
+   ========================================================================== */
+
+.sofia-mensajes {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar estilizado */
+.sofia-mensajes::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sofia-mensajes::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sofia-mensajes::-webkit-scrollbar-thumb {
+  background: rgba(0, 188, 200, 0.22);
+  border-radius: 4px;
+}
+
+.sofia-mensajes::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 188, 200, 0.45);
+}
+
+/* Estructura de fila de mensaje */
+.sofia-fila {
+  display: flex;
+  gap: 10px;
+  max-width: 88%;
+  animation: sofiaMensajeEntrar 0.25s ease-out;
+}
+
+@keyframes sofiaMensajeEntrar {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.sofia-fila--usuario {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.sofia-fila--bot {
+  align-self: flex-start;
+}
+
+/* Avatar del bot en cada mensaje */
+.sofia-fila__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #145a32, #00bcc8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  box-shadow: 0 0 10px rgba(0, 188, 200, 0.35);
+}
+
+.sofia-fila__avatar svg {
+  width: 16px;
+  height: 16px;
+  color: #fff;
+}
+
+/* Burbuja de contenido */
+.sofia-burbuja {
+  padding: 12px 15px;
+  border-radius: 16px;
+  font-family: var(--letra-texto, 'Plus Jakarta Sans', sans-serif);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--sofia-texto);
+  word-break: break-word;
+}
+
+.sofia-fila--usuario .sofia-burbuja {
+  background: linear-gradient(135deg, #028090 0%, #0099a6 100%);
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 4px 15px rgba(2, 128, 144, 0.35);
+}
+
+.sofia-fila--bot .sofia-burbuja {
+  background: rgba(12, 34, 28, 0.88);
+  border: 1px solid rgba(0, 188, 200, 0.22);
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+}
+
+.sofia-burbuja p {
+  margin: 0 0 8px 0;
+}
+
+.sofia-burbuja p:last-child {
+  margin-bottom: 0;
+}
+
+.sofia-burbuja strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.sofia-burbuja a {
+  color: var(--sofia-verde-electrico);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.sofia-burbuja a:hover {
+  color: #ffffff;
+}
+
+.sofia-burbuja ul,
+.sofia-burbuja ol {
+  margin: 6px 0 8px 0;
+  padding-left: 18px;
+}
+
+.sofia-burbuja li {
+  margin-bottom: 4px;
+}
+
+/* Tarjeta destacada dentro de respuesta (ej: Materia, Fecha, Convenio) */
+.sofia-tarjeta-dato {
+  background: rgba(4, 18, 14, 0.65);
+  border: 1px solid rgba(0, 188, 200, 0.3);
+  border-left: 3px solid var(--sofia-verde-electrico);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 8px 0;
+  font-size: 13px;
+}
+
+.sofia-tarjeta-dato__titulo {
+  color: var(--sofia-verde-electrico);
+  font-weight: 700;
+  font-size: 13.5px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sofia-tarjeta-dato__badge {
+  font-size: 11px;
+  background: rgba(0, 188, 200, 0.15);
+  color: var(--sofia-verde-electrico);
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-family: var(--letra-universidad, monospace);
+  font-weight: normal;
+}
+
+/* Hora / Marca temporal */
+.sofia-burbuja__hora {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 5px;
+  text-align: right;
+  display: block;
+}
+
+/* ==========================================================================
+   5. CHIPS DE SUGERENCIAS RÁPIDAS
+   ========================================================================== */
+
+.sofia-chips-contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.sofia-chips-titulo {
+  font-size: 11px;
+  color: var(--sofia-texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--letra-universidad, monospace);
+}
+
+.sofia-chips-rejilla {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sofia-chip {
+  background: rgba(2, 128, 144, 0.14);
+  border: 1px solid rgba(0, 188, 200, 0.3);
+  color: #bbf0ea;
+  font-family: var(--letra-texto, 'Plus Jakarta Sans', sans-serif);
+  font-size: 12px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.sofia-chip:hover {
+  background: rgba(0, 188, 200, 0.28);
+  border-color: var(--sofia-verde-electrico);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.sofia-chip:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   6. INDICADOR DE ESCRITURA ("PENSANDO...")
+   ========================================================================== */
+
+.sofia-escribiendo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 14px;
+  background: rgba(12, 34, 28, 0.7);
+  border: 1px solid rgba(0, 188, 200, 0.2);
+  border-radius: 14px;
+  width: fit-content;
+}
+
+.sofia-escribiendo__punto {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sofia-verde-electrico);
+  opacity: 0.4;
+  animation: sofiaEscribiendo 1.3s infinite ease-in-out;
+}
+
+.sofia-escribiendo__punto:nth-child(2) { animation-delay: 0.2s; }
+.sofia-escribiendo__punto:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes sofiaEscribiendo {
+  0%, 80%, 100% { transform: scale(0.8); opacity: 0.4; }
+  40% { transform: scale(1.3); opacity: 1; }
+}
+
+/* ==========================================================================
+   7. FORMULARIO DE ENTRADA (INPUT)
+   ========================================================================== */
+
+.sofia-pie {
+  padding: 14px 16px;
+  background: rgba(5, 18, 15, 0.98);
+  border-top: 1px solid rgba(0, 188, 200, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.sofia-formulario {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.sofia-input {
+  flex: 1;
+  background: rgba(10, 28, 24, 0.85);
+  border: 1.5px solid rgba(0, 188, 200, 0.25);
+  border-radius: 12px;
+  padding: 11px 14px;
+  color: #ffffff;
+  font-family: var(--letra-texto, 'Plus Jakarta Sans', sans-serif);
+  font-size: 13.5px;
+  line-height: 1.3;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.sofia-input::placeholder {
+  color: rgba(180, 230, 225, 0.45);
+}
+
+.sofia-input:focus {
+  background: rgba(14, 38, 32, 0.95);
+  border-color: var(--sofia-verde-electrico);
+  box-shadow: 0 0 14px rgba(0, 188, 200, 0.3);
+}
+
+.sofia-btn-enviar {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #028090, #00bcc8);
+  border: none;
+  color: #041a16;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  box-shadow: 0 4px 14px rgba(2, 128, 144, 0.4);
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.sofia-btn-enviar:hover:not(:disabled) {
+  transform: scale(1.06);
+  box-shadow: 0 6px 18px rgba(0, 188, 200, 0.55);
+}
+
+.sofia-btn-enviar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(40%);
+}
+
+.sofia-btn-enviar svg {
+  width: 18px;
+  height: 18px;
+  margin-left: 2px;
+}
+
+.sofia-aviso-privacidad {
+  font-size: 11px;
+  color: rgba(190, 235, 230, 0.45);
+  text-align: center;
+  font-family: var(--letra-texto, 'Plus Jakarta Sans', sans-serif);
+  margin: 0;
+}
+
+/* ==========================================================================
+   8. ADAPTACIONES MÓVILES (RESPONSIVE)
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  .sofia-flotante-wrap {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .sofia-boton {
+    width: 56px;
+    height: 56px;
+  }
+
+  .sofia-ventana {
+    bottom: 82px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+    height: min(580px, calc(100vh - 96px));
+    border-radius: 18px;
+  }
+
+  .sofia-globo-bienvenida {
+    max-width: 240px;
+    font-size: 12px;
+  }
+}

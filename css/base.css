@@ -1149,3 +1149,36 @@ a { color: var(--azul); }
   margin: 0;
   opacity: 0.85;
 }
+
+/* =========================================================
+   Botón "Instalar app" y su ayuda
+   ========================================================= */
+.instalar-fila { display: flex; justify-content: center; margin-top: 14px; }
+.instalar-fila--portada { justify-content: center; margin: 20px 0 4px; }
+.instalar-btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 10px 20px; border: 2px solid var(--lima-vibrante); border-radius: 999px;
+  background: var(--verde-bosque); color: var(--lima-vibrante);
+  font-family: var(--letra-texto); font-size: 14px; font-weight: 700; letter-spacing: .02em;
+  cursor: pointer; transition: background .15s, color .15s, transform .15s, box-shadow .15s;
+  box-shadow: 0 6px 18px -8px rgba(3, 29, 68, .55);
+}
+.instalar-btn svg { width: 17px; height: 17px; flex: none; }
+.instalar-btn:hover, .instalar-btn:focus-visible { background: var(--lima-vibrante); color: var(--azul-marino); transform: translateY(-1px); }
+.instalar-btn:focus-visible { outline: 3px solid var(--verde-bosque); outline-offset: 3px; }
+
+.instalar-dialogo {
+  width: min(92vw, 420px); padding: 22px 24px; border: 2px solid var(--lima-vibrante); border-radius: 14px;
+  background: var(--verde-bosque); color: #e8eef7;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .7);
+}
+.instalar-dialogo::backdrop { background: rgba(3, 29, 68, .75); backdrop-filter: blur(3px); }
+.instalar-dialogo__etiqueta { margin: 0 0 6px; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--lima-vibrante); }
+.instalar-dialogo__titulo { margin: 0 0 12px; font-family: var(--letra-universidad); font-size: 22px; color: #fff; }
+.instalar-dialogo__pasos { margin: 0 0 16px; padding-left: 22px; display: grid; gap: 8px; font-size: 15px; line-height: 1.5; }
+.instalar-dialogo__pasos b { color: #fff; }
+.instalar-dialogo__cerrar {
+  width: 100%; padding: 11px; border: 2px solid var(--lima-vibrante); border-radius: 999px; background: transparent;
+  color: var(--lima-vibrante); font-family: var(--letra-texto); font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.instalar-dialogo__cerrar:hover, .instalar-dialogo__cerrar:focus-visible { background: var(--lima-vibrante); color: var(--azul-marino); }
